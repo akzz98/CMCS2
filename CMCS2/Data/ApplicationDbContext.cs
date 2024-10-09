@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using CMCS2.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace CMCS2.Data
@@ -9,5 +10,7 @@ namespace CMCS2.Data
             : base(options)
         {
         }
+
+        public DbSet<Claim> Claims { get; set; }
     }
 }
