@@ -1,25 +1,58 @@
-﻿<h2>Verify & Approve Claims</h2>
-<table class="table">
-    <thead>
-        <tr>
-            <th>Lecturer</th>
-            <th>Hours Worked</th>
-            <th>Hourly Rate</th>
-            <th>Status</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>John Doe</td>
-            <td>10</td>
-            <td>$40</td>
-            <td>Pending</td>
-            <td>
-                <button class="btn btn-success">Approve</button>
-                <button class="btn btn-danger">Reject</button>
-            </td>
-        </tr>
-        <!-- Additional rows can be added similarly -->
-    </tbody>
-</table>
+﻿@model IEnumerable<CMCS2.Models.Claim>
+@{
+    ViewBag.Title = "Verify Claims";
+}
+
+<div class="d-flex flex-column justify-content-center align-items-center vh-100">
+    <h2>Verify Claims</h2>
+
+    <div class="table-container">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Claim ID</th>
+                    <th>Lecturer Name</th>
+                    <th>Hours Worked</th>
+                    <th>Hourly Rate</th>
+                    <th>Notes</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var claim in Model)
+                {
+                    <tr>
+                        <td>@claim.ClaimId</td>
+                        @* <td>@claim.LecturerName</td>  <!-- Assuming you have Lecturer details --> *@
+                        <td>@claim.HoursWorked</td>
+                        <td>@claim.HourlyRate</td>
+                        <td>@claim.Notes</td>
+                        <td>
+                            <form method="post" action="@Url.Action("ApproveClaim", "Coordinator")">
+                                <input type="hidden" name="claimId" value="@claim.ClaimId" />
+                                <button type="submit" class="btn btn-success">Approve</button>
+                            </form>
+                            <form method="post" action="@Url.Action("RejectClaim", "Coordinator")">
+                                <input type="hidden" name="claimId" value="@claim.ClaimId" />
+                                <button type="submit" class="btn btn-danger">Reject</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <a href="@Url.Action("Index", "Lecturer")" class="btn btn-primary mt-4">Back</a>
+</div>
+
+<style>
+    .table-container {
+        margin-top: 20px;
+        max-width: 800px;
+        width: 100%;
+    }
+    .table {
+        width: 100%;
+    }
+</style>
