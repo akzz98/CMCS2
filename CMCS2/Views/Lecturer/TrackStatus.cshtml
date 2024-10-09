@@ -1,0 +1,44 @@
+﻿@{
+    ViewBag.Title = "Track Claim";
+}
+
+<div class="d-flex flex-column justify-content-center align-items-center vh-100">
+    <h2>Track Claim Status</h2>
+
+    <div class="table-container">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Claim ID</th>
+                    <th>Date Submitted</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1001</td>
+                    <td>2024-09-01</td>
+                    <td>Pending Approval</td>
+                </tr>
+                <tr>
+                    <td>1002</td>
+                    <td>2024-09-02</td>
+                    <td>Approved</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <a href="@Url.Action("Lecturer", "Home")" class="btn btn-primary mt-4">Back</a>
+</div>
+
+<style>
+    .table-container {
+        margin-top: 20px;
+        max-width: 800px; 
+        width: 100%;
+    }
+    .table {
+        width: 100%;
+    }
+</style>

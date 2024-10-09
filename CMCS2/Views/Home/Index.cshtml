@@ -1,0 +1,47 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="d-flex flex-column justify-content-center align-items-center vh-100">
+    <div class="text-center">
+        <h1>Welcome to the Contract Monthly Claim System (CMCS)</h1>
+        <h3>Select one of the options to start:</h3>
+
+        <div class="row">
+            <div class="col-md-6 d-flex justify-content-center">
+                <div class="card text-white bg-secondary mb-3">
+                    <div class="card-body">
+                        <h4 class="card-title">Lecturer</h4>
+                        <p class="card-text">Submit and manage your claims.</p>
+                        <a href="@Url.Action("Lecturer", "Home")" class="btn btn-primary">Go to Lecturer</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 d-flex justify-content-center">
+                <div class="card text-white bg-secondary mb-3">
+                    <div class="card-body">
+                        <h4 class="card-title">Management</h4>
+                        <p class="card-text">Manage lecturers' claims and approvals.</p>
+                        <a href="@Url.Action("Organization", "Home")" class="btn btn-primary">Go to Organization</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .container {
+        margin-top: 0;
+    }
+
+    .row {
+        margin-top: 20px;
+        justify-content: center; 
+    }
+
+    .card {
+        margin: 10px;
+    }
+</style>
