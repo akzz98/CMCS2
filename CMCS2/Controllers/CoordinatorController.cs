@@ -12,30 +12,60 @@ namespace CMCS2.Controllers
             _context = context;
         }
 
-        [HttpPost]
-        public IActionResult ApproveClaim(int claimId)
+        // Coordinator approves a claim (moves status to 'Verified')
+        public async Task<IActionResult> ApproveClaim(int claimId)
         {
             var claim = _context.Claims.FirstOrDefault(c => c.ClaimId == claimId);
-            if (claim != null)
+
+            if (claim != null && claim.Status == "Pending")
             {
-                claim.Status = "Approved";
-                _context.SaveChanges();
+                claim.Status = "Verified";
+                await _context.SaveChangesAsync();
             }
 
-            return RedirectToAction("VerifyClaims", "Lecturer");
+            return RedirectToAction("ViewUnapprovedClaims", "Organization");
         }
 
-        [HttpPost]
-        public IActionResult RejectClaim(int claimId)
+        // Coordinator rejects a claim (moves status to 'Rejected')
+        public async Task<IActionResult> RejectClaim(int claimId)
         {
             var claim = _context.Claims.FirstOrDefault(c => c.ClaimId == claimId);
-            if (claim != null)
+
+            if (claim != null && claim.Status == "Pending")
             {
                 claim.Status = "Rejected";
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
 
-            return RedirectToAction("VerifyClaims", "Coordinator");
+            return RedirectToAction("ViewUnapprovedClaims", "Organization");
+        }
+
+        // Manager finalizes approval (moves status to 'Approved')
+        public async Task<IActionResult> FinalizeApproval(int claimId)
+        {
+            var claim = _context.Claims.FirstOrDefault(c => c.ClaimId == claimId);
+
+            if (claim != null && claim.Status == "Verified")
+            {
+                claim.Status = "Approved";
+                await _context.SaveChangesAsync();
+            }
+
+            return RedirectToAction("ViewVerifiedClaims", "Organization");
+        }
+
+        // Manager rejects a verified claim (moves status to 'Rejected')
+        public async Task<IActionResult> RejectVerifiedClaim(int claimId)
+        {
+            var claim = _context.Claims.FirstOrDefault(c => c.ClaimId == claimId);
+
+            if (claim != null && claim.Status == "Verified")
+            {
+                claim.Status = "Rejected";
+                await _context.SaveChangesAsync();
+            }
+
+            return RedirectToAction("ViewVerifiedClaims", "Organization");
         }
     }
 }

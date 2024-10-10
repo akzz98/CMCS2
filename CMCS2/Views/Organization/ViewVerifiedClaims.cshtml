@@ -17,6 +17,7 @@
                     <th>Hourly Rate</th>
                     <th>Date Submitted</th>
                     <th>Status</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -29,6 +30,10 @@
                         <td>@claim.HourlyRate</td>
                         <td>@claim.DateSubmitted.ToShortDateString()</td>
                         <td>@claim.Status</td>
+                        <td>
+                            <a href="@Url.Action("FinalizeApproval", "Coordinator", new { claimId = claim.ClaimId })" class="btn btn-success">Approve</a>
+                            <a href="@Url.Action("RejectVerifiedClaim", "Coordinator", new { claimId = claim.ClaimId })" class="btn btn-danger">Reject</a>
+                        </td>
                     </tr>
                 }
             </tbody>
