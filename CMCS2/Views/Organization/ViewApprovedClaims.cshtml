@@ -15,7 +15,8 @@
                     @* <th>Lecturer</th> *@
                     <th>Hours Worked</th>
                     <th>Hourly Rate</th>
-                    <th>Date Submitted</th>
+                    <th>Notes</th>
+                    <th>Supporting Document</th>
                     <th>Status</th>
                 </tr>
             </thead>
@@ -27,7 +28,16 @@
                         @* <td>@claim.LecturerName</td> *@
                         <td>@claim.HoursWorked</td>
                         <td>@claim.HourlyRate</td>
-                        <td>@claim.DateSubmitted.ToShortDateString()</td>
+                        <td>@claim.Notes</td>
+                        <td>
+                            @if (!string.IsNullOrEmpty(claim.DocumentPath))
+                            {
+                                <a href="@Url.Content(claim.DocumentPath)" target="_blank">View Document</a>
+                            }
+                            else
+                            {
+                                <span>No document uploaded</span>
+                            }
                         <td>@claim.Status</td>
                     </tr>
                 }
