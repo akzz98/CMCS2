@@ -15,6 +15,7 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 // Use ApplicationUser instead of IdentityUser
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
 
@@ -40,6 +41,12 @@ else
     app.UseHsts();
 }
 
+using (var scope = app.Services.CreateScope())
+{
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+    await EnsureRolesAsync(roleManager);
+}
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
@@ -54,3 +61,24 @@ app.MapControllerRoute(
 app.MapRazorPages();
 
 app.Run();
+
+
+using (var scope = app.Services.CreateScope())
+{
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+    await EnsureRolesAsync(roleManager);
+}
+
+async Task EnsureRolesAsync(RoleManager<IdentityRole> roleManager)
+{
+    string[] roleNames = { "Lecturer", "Coordinator", "Manager" };
+
+    foreach (var roleName in roleNames)
+    {
+        var roleExist = await roleManager.RoleExistsAsync(roleName);
+        if (!roleExist)
+        {
+            await roleManager.CreateAsync(new IdentityRole(roleName));
+        }
+    }
+}
