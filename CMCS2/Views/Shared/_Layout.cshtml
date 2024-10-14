@@ -7,8 +7,21 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/CMCS2.styles.css" asp-append-version="true" />
+    <style>
+        /* Style for the top-center button */
+        .top-center-button {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9999;
+        }
+    </style>
 </head>
 <body class="d-flex justify-content-center align-items-center vh-100 m-0">
+
+    <button class="btn btn-primary top-center-button">Log Out</button>
+
     <header>
     </header>
 
@@ -19,7 +32,6 @@
     </main>
 
     <footer class="border-top footer text-muted">
-        <!-- You can add footer content here -->
     </footer>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
