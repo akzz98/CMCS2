@@ -8,16 +8,18 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/CMCS2.styles.css" asp-append-version="true" />
 </head>
-<body>
+<body class="d-flex justify-content-center align-items-center vh-100 m-0">
     <header>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
+
+    <main role="main" class="w-100">
+        <div class="container d-flex justify-content-center align-items-center flex-column">
             @RenderBody()
-        </main>
-    </div>
+        </div>
+    </main>
 
     <footer class="border-top footer text-muted">
+        <!-- You can add footer content here -->
     </footer>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
