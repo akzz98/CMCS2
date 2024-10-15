@@ -20,7 +20,13 @@
 </head>
 <body class="d-flex justify-content-center align-items-center vh-100 m-0">
 
-    <button class="btn btn-primary top-center-button">Log Out</button>
+    @* Logout button *@
+    @if (User.Identity?.IsAuthenticated ?? false)
+    {
+        <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="/" method="post">
+            <button type="submit" class="btn btn-primary top-center-button">Log Out</button>
+        </form>
+    }
 
     <header>
     </header>
