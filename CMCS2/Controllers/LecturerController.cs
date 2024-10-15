@@ -1,9 +1,11 @@
 ﻿using CMCS2.Data;
 using CMCS2.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CMCS2.Controllers
 {
+    [Authorize(Roles = "Lecturer")]
     public class LecturerController : Controller
     {
         private readonly IWebHostEnvironment _environment;

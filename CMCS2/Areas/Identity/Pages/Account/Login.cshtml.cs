@@ -22,11 +22,13 @@ namespace CMCS2.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public LoginModel(SignInManager<ApplicationUser> signInManager, ILogger<LoginModel> logger)
+        public LoginModel(SignInManager<ApplicationUser> signInManager, ILogger<LoginModel> logger, UserManager<ApplicationUser> userManager)
         {
             _signInManager = signInManager;
             _logger = logger;
+            _userManager = userManager;
         }
 
         /// <summary>
@@ -116,7 +118,26 @@ namespace CMCS2.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
+
+                    // Fetch the current logged-in user
+                    var user = await _userManager.FindByEmailAsync(Input.Email);
+
+                    // Get the user's roles
+                    var roles = await _userManager.GetRolesAsync(user);
+
+                    // Check for Lecturer role and redirect accordingly
+                    if (roles.Contains("Lecturer"))
+                    {
+                        return LocalRedirect(Url.Content("~/Lecturer/Index"));
+                    }
+                    else if (roles.Contains("Coordinator") || roles.Contains("Manager"))
+                    {
+                        return LocalRedirect("~/Organization/index");
+                    }
+
+                    // Default redirect
                     return LocalRedirect(returnUrl);
+
                 }
                 if (result.RequiresTwoFactor)
                 {

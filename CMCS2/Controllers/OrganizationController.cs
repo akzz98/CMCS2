@@ -1,8 +1,10 @@
 ﻿using CMCS2.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CMCS2.Controllers
 {
+    [Authorize(Roles = "Manager, Coordinator")]
     public class OrganizationController : Controller
     {
         private readonly ApplicationDbContext _context;
