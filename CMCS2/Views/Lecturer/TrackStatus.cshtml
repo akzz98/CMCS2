@@ -7,6 +7,16 @@
     <h2>Track Claim Status</h2>
 
     <div class="table-container">
+
+        @if (!Model.Any())
+        {
+            <div class="alert alert-warning" role="alert">
+                No claims submitted yet.
+            </div>
+        }
+        else
+        {
+
         <table class="table table-bordered table-striped">
             <thead>
                 <tr>
@@ -26,6 +36,7 @@
                 }
             </tbody>
         </table>
+        }
     </div>
 
     <a href="@Url.Action("Index", "Lecturer")" class="btn btn-primary mt-4">Back</a>

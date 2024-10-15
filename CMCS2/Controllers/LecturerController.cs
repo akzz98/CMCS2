@@ -1,6 +1,7 @@
 ﻿using CMCS2.Data;
 using CMCS2.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CMCS2.Controllers
@@ -10,17 +11,32 @@ namespace CMCS2.Controllers
     {
         private readonly IWebHostEnvironment _environment;
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public LecturerController(IWebHostEnvironment environment, ApplicationDbContext context)
+        public LecturerController(IWebHostEnvironment environment, ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _environment = environment;
             _context = context;
+            _userManager = userManager;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            var user = await _userManager.GetUserAsync(User);
+            if (user != null)
+            {
+                ViewBag.UserName = user.Name;
+            }
+            else
+            {
+                ViewBag.UserName = "Lecturer"; 
+            }
+
             return View();
         }
+
+
+
         public ActionResult SubmitClaim()
         {
             return View();
@@ -37,7 +53,8 @@ namespace CMCS2.Controllers
                     HourlyRate = hourlyRate,
                     Notes = notes,
                     Status = "Pending",
-                    DateSubmitted = DateTime.Now
+                    DateSubmitted = DateTime.Now,
+                    LecturerId = _userManager.GetUserId(User)
                 };
 
                 // Handle file upload
@@ -90,13 +107,13 @@ namespace CMCS2.Controllers
 
         public ActionResult TrackStatus()
         {
-            var claims = _context.Claims.ToList();
-            return View(claims);
-        }
+            // Get the currently logged-in user's ID
+            var userId = _userManager.GetUserId(User);
 
-        public ActionResult VerifyClaims()
-        {
-            return View();
+            // Fetch claims where the LecturerId matches the current user's ID
+            var claims = _context.Claims.Where(c => c.LecturerId == userId).ToList();
+
+            return View(claims);
         }
 
     }
