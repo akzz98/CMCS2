@@ -11,7 +11,6 @@
         public DateTime DateSubmitted { get; set; } = DateTime.Now;
         public string LecturerId { get; set; }
         public string? RejectionReason { get; set; }
-        public string LecturerName { get; set; }
-        public string LecturerSurname { get; set; }
+        public string LecturerFullName { get; set; }
     }
 }

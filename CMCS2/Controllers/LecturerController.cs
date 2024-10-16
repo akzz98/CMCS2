@@ -57,8 +57,7 @@ namespace CMCS2.Controllers
                     Status = "Pending",
                     DateSubmitted = DateTime.Now,
                     LecturerId = _userManager.GetUserId(User),
-                    LecturerName = user.Name,
-                    LecturerSurname = user.Surname
+                    LecturerFullName = $"{user.Name} {user.Surname}"
                 };
 
                 // Handle file upload
