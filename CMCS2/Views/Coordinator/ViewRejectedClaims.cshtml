@@ -1,11 +1,11 @@
 ﻿@model IEnumerable<CMCS2.Models.Claim>
 
 @{
-    ViewBag.Title = "Unapproved Claims";
+    ViewBag.Title = "Rejected Claims";
 }
 
 <div class="d-flex flex-column justify-content-center align-items-center vh-100">
-    <h1>Unapproved Claims</h1>
+    <h1>Rejected Claims</h1>
 
     <div class="table-container">
         <table class="table table-bordered table-striped">
@@ -17,7 +17,6 @@
                     <th>Hourly Rate</th>
                     <th>Notes</th>
                     <th>Supporting Document</th>
-                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -38,18 +37,13 @@
                             {
                                 <span>No document uploaded</span>
                             }
-                        </td>
-                        <td>
-                            <a href="@Url.Action("ApproveClaim", "Coordinator", new { claimId = claim.ClaimId })" class="btn btn-success">Approve</a>
-                            <a href="@Url.Action("RejectClaim", "Coordinator", new { claimId = claim.ClaimId })" class="btn btn-danger">Reject</a>
-                        </td>
                     </tr>
                 }
             </tbody>
         </table>
     </div>
 
-    <a href="@Url.Action("Index", "Organization")" class="btn btn-primary mt-4">Back</a>
+    <a href="@Url.Action("Index", "Coordinator")" class="btn btn-primary mt-4">Back</a>
 </div>
 
 <style>

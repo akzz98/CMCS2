@@ -130,11 +130,14 @@ namespace CMCS2.Areas.Identity.Pages.Account
                     {
                         return LocalRedirect(Url.Content("~/Lecturer/Index"));
                     }
-                    else if (roles.Contains("Coordinator") || roles.Contains("Manager"))
+                    else if(roles.Contains("Coordinator"))
                     {
-                        return LocalRedirect("~/Organization/index");
+                        return LocalRedirect(Url.Content("~/Coordinator/Index"));
                     }
-
+                    else if(roles.Contains("Manager"))
+                    {
+                        return LocalRedirect(Url.Content("~/Organization/Index"));
+                    }
                     // Default redirect
                     return LocalRedirect(returnUrl);
 

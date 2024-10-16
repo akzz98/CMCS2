@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "Organization Dashboard";
+    ViewBag.Title = "Coordinator Dashboard";
 }
 
 <div class="d-flex flex-column justify-content-center align-items-center vh-100">
@@ -8,8 +8,9 @@
         <h3>What would you like to do?</h3>
 
         <div class="btn-group" role="group" aria-label="Organisation actions">
-            <a href="@Url.Action("ViewVerifiedClaims", "Organization")" class="btn btn-warning">View Verified Claims</a>
-            <a href="@Url.Action("ViewApprovedClaims", "Organization")" class="btn btn-success">View Approved Claims</a>
+            <a href="@Url.Action("ViewUnapprovedClaims", "Coordinator")" class="btn btn-danger">View Unapproved Claims</a>
+            <a href="@Url.Action("ViewRejectedClaims", "Coordinator")" class="btn btn-danger">View Rejected Claims</a>
+            <a href="@Url.Action("ViewVerifiedClaims", "Coordinator")" class="btn btn-danger">View Verified Claims</a>
         </div>
 
  

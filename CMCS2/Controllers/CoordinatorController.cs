@@ -1,17 +1,53 @@
 ﻿using CMCS2.Data;
+using CMCS2.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CMCS2.Controllers
 {
-    [Authorize(Roles = "Coordinator, Manager")]
+    [Authorize(Roles = "Coordinator")]
     public class CoordinatorController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public CoordinatorController(ApplicationDbContext context)
+        public CoordinatorController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user != null)
+            {
+                ViewBag.UserName = user.Name;
+            }
+            else
+            {
+                ViewBag.UserName = "Coordinator";
+            }
+            return View();
+        }
+
+        public ActionResult ViewUnapprovedClaims()
+        {
+            var unapprovedClaims = _context.Claims.Where(c => c.Status == "Pending").ToList();
+            return View(unapprovedClaims);
+        }
+
+        public ActionResult ViewVerifiedClaims()
+        {
+            var verifiedClaims = _context.Claims.Where(c => c.Status == "Verified").ToList();
+            return View(verifiedClaims);
+        }
+
+        public ActionResult ViewRejectedClaims()
+        {
+            var rejectedClaims = _context.Claims.Where(c => c.Status == "Rejected").ToList();
+            return View(rejectedClaims);
         }
 
         // Coordinator approves a claim (moves status to 'Verified')
@@ -25,7 +61,7 @@ namespace CMCS2.Controllers
                 await _context.SaveChangesAsync();
             }
 
-            return RedirectToAction("ViewUnapprovedClaims", "Organization");
+            return RedirectToAction("ViewUnapprovedClaims", "Coordinator");
         }
 
         // Coordinator rejects a claim (moves status to 'Rejected')
@@ -39,35 +75,9 @@ namespace CMCS2.Controllers
                 await _context.SaveChangesAsync();
             }
 
-            return RedirectToAction("ViewUnapprovedClaims", "Organization");
+            return RedirectToAction("ViewUnapprovedClaims", "Coordinator");
         }
 
-        // Manager finalizes approval (moves status to 'Approved')
-        public async Task<IActionResult> FinalizeApproval(int claimId)
-        {
-            var claim = _context.Claims.FirstOrDefault(c => c.ClaimId == claimId);
 
-            if (claim != null && claim.Status == "Verified")
-            {
-                claim.Status = "Approved";
-                await _context.SaveChangesAsync();
-            }
-
-            return RedirectToAction("ViewVerifiedClaims", "Organization");
-        }
-
-        // Manager rejects a verified claim (moves status to 'Rejected')
-        public async Task<IActionResult> RejectVerifiedClaim(int claimId)
-        {
-            var claim = _context.Claims.FirstOrDefault(c => c.ClaimId == claimId);
-
-            if (claim != null && claim.Status == "Verified")
-            {
-                claim.Status = "Rejected";
-                await _context.SaveChangesAsync();
-            }
-
-            return RedirectToAction("ViewVerifiedClaims", "Organization");
-        }
     }
 }

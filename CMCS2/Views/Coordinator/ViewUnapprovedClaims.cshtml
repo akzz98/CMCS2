@@ -1,20 +1,22 @@
 ﻿@model IEnumerable<CMCS2.Models.Claim>
+
 @{
-    ViewBag.Title = "Verify Claims";
+    ViewBag.Title = "Unapproved Claims";
 }
 
 <div class="d-flex flex-column justify-content-center align-items-center vh-100">
-    <h2>Verify Claims</h2>
+    <h1>Unapproved Claims</h1>
 
     <div class="table-container">
         <table class="table table-bordered table-striped">
             <thead>
                 <tr>
                     <th>Claim ID</th>
-                    <th>Lecturer Name</th>
+                    @* <th>Lecturer</th> *@
                     <th>Hours Worked</th>
                     <th>Hourly Rate</th>
                     <th>Notes</th>
+                    <th>Supporting Document</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -23,19 +25,23 @@
                 {
                     <tr>
                         <td>@claim.ClaimId</td>
-                        @* <td>@claim.LecturerName</td>  <!-- Assuming you have Lecturer details --> *@
+                        @* <td>@claim.LecturerName</td> *@
                         <td>@claim.HoursWorked</td>
                         <td>@claim.HourlyRate</td>
                         <td>@claim.Notes</td>
                         <td>
-                            <form method="post" action="@Url.Action("ApproveClaim", "Coordinator")">
-                                <input type="hidden" name="claimId" value="@claim.ClaimId" />
-                                <button type="submit" class="btn btn-success">Approve</button>
-                            </form>
-                            <form method="post" action="@Url.Action("RejectClaim", "Coordinator")">
-                                <input type="hidden" name="claimId" value="@claim.ClaimId" />
-                                <button type="submit" class="btn btn-danger">Reject</button>
-                            </form>
+                            @if (!string.IsNullOrEmpty(claim.DocumentPath))
+                            {
+                                <a href="@Url.Content(claim.DocumentPath)" target="_blank">View Document</a>
+                            }
+                            else
+                            {
+                                <span>No document uploaded</span>
+                            }
+                        </td>
+                        <td>
+                            <a href="@Url.Action("ApproveClaim", "Coordinator", new { claimId = claim.ClaimId })" class="btn btn-success">Approve</a>
+                            <a href="@Url.Action("RejectClaim", "Coordinator", new { claimId = claim.ClaimId })" class="btn btn-danger">Reject</a>
                         </td>
                     </tr>
                 }
@@ -52,6 +58,7 @@
         max-width: 800px;
         width: 100%;
     }
+
     .table {
         width: 100%;
     }
