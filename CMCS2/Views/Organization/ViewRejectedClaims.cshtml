@@ -1,11 +1,11 @@
 ﻿@model IEnumerable<CMCS2.Models.Claim>
 
 @{
-    ViewBag.Title = "Verified Claims";
+    ViewBag.Title = "Rejected Claims";
 }
 
 <div class="d-flex flex-column justify-content-center align-items-center vh-100">
-    <h1>Verified Claims</h1>
+    <h1>Rejected Claims</h1>
 
     <div class="table-container">
         @if (!Model.Any())
@@ -24,8 +24,10 @@
                     <th>Hours Worked</th>
                     <th>Hourly Rate</th>
                     <th>Notes</th>
-                    <th>Date Verified</th>
                     <th>Supporting Document</th>
+                    <th>Status</th>
+                    <th>Proccessed By</th>
+                    <th>Rejection Reason</th>
                 </tr>
             </thead>
             <tbody>
@@ -37,7 +39,6 @@
                         <td>@claim.HoursWorked</td>
                         <td>@claim.HourlyRate</td>
                         <td>@claim.Notes</td>
-                        <td>@claim.DateVerified</td>
                         <td>
                             @if (!string.IsNullOrEmpty(claim.DocumentPath))
                             {
@@ -47,6 +48,10 @@
                             {
                                 <span>No document uploaded</span>
                             }
+                        </td>
+                        <td>@claim.Status</td>
+                        <td>@claim.CoordinatorFullName</td>
+                        <td>@claim.RejectionReason</td>
                     </tr>
                 }
             </tbody>
@@ -54,7 +59,7 @@
         }
     </div>
 
-    <a href="@Url.Action("TrackClaims", "Coordinator")" class="btn btn-primary mt-4">Back</a>
+    <a href="@Url.Action("TrackClaims", "organization")" class="btn btn-primary mt-4">Back</a>
 </div>
 
 <style>

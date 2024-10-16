@@ -32,6 +32,11 @@ namespace CMCS2.Controllers
             return View();
         }
 
+        public IActionResult TrackClaims()
+        {
+            return View();
+        }
+
         public ActionResult ViewUnapprovedClaims()
         {
             var unapprovedClaims = _context.Claims.Where(c => c.Status == "Pending").ToList();
@@ -57,7 +62,11 @@ namespace CMCS2.Controllers
 
             if (claim != null && claim.Status == "Pending")
             {
+                var coordinator = await _userManager.GetUserAsync(User);
+
                 claim.Status = "Verified";
+                claim.CoordinatorFullName = $"{coordinator.Name} {coordinator.Surname}";
+                claim.DateVerified = DateTime.Now;
                 await _context.SaveChangesAsync();
             }
 

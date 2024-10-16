@@ -32,6 +32,15 @@ namespace CMCS2.Controllers
             return View();
         }
 
+        public IActionResult TrackClaims()
+        {
+            return View();
+        }
+        public ActionResult ViewRejectedClaims()
+        {
+            var rejectedClaims = _context.Claims.Where(c => c.Status == "Rejected").ToList();
+            return View(rejectedClaims);
+        }
         public ActionResult ViewVerifiedClaims()
         {
             var verifiedClaims = _context.Claims.Where(c => c.Status == "Verified").ToList();

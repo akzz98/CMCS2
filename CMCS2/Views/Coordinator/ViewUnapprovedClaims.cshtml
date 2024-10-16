@@ -24,6 +24,7 @@
                     <th>Hours Worked</th>
                     <th>Hourly Rate</th>
                     <th>Notes</th>
+                    <th>Date Submitted</th>
                     <th>Supporting Document</th>
                     <th>Actions</th>
                 </tr>
@@ -37,6 +38,7 @@
                         <td>@claim.HoursWorked</td>
                         <td>@claim.HourlyRate</td>
                         <td>@claim.Notes</td>
+                        <td>@claim.DateSubmitted</td>
                         <td>
                             @if (!string.IsNullOrEmpty(claim.DocumentPath))
                             {
@@ -48,7 +50,7 @@
                             }
                         </td>
                         <td>
-                            <a href="@Url.Action("ApproveClaim", "Coordinator", new { claimId = claim.ClaimId })" class="btn btn-success">Approve</a>
+                            <a href="@Url.Action("ApproveClaim", "Coordinator", new { claimId = claim.ClaimId })" class="btn btn-success">Verify</a>
 
                             <!-- Trigger modal for rejecting a claim -->
                             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#rejectModal_@claim.ClaimId">
