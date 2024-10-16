@@ -47,6 +47,8 @@ namespace CMCS2.Controllers
         {
             if (ModelState.IsValid)
             {
+                var user = await _userManager.GetUserAsync(User);
+
                 var claim = new Claim
                 {
                     HoursWorked = hoursWorked,
@@ -54,7 +56,9 @@ namespace CMCS2.Controllers
                     Notes = notes,
                     Status = "Pending",
                     DateSubmitted = DateTime.Now,
-                    LecturerId = _userManager.GetUserId(User)
+                    LecturerId = _userManager.GetUserId(User),
+                    LecturerName = user.Name,
+                    LecturerSurname = user.Surname
                 };
 
                 // Handle file upload

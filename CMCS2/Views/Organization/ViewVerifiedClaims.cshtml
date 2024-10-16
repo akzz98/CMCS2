@@ -39,8 +39,8 @@
                                 <span>No document uploaded</span>
                             }
                         <td>
-                            <a href="@Url.Action("FinalizeApproval", "Coordinator", new { claimId = claim.ClaimId })" class="btn btn-success">Approve</a>
-                            <a href="@Url.Action("RejectVerifiedClaim", "Coordinator", new { claimId = claim.ClaimId })" class="btn btn-danger">Reject</a>
+                            <a href="@Url.Action("FinalizeApproval", "Organization", new { claimId = claim.ClaimId })" class="btn btn-success">Approve</a>
+                            <a href="@Url.Action("RejectVerifiedClaim", "Organization", new { claimId = claim.ClaimId })" class="btn btn-danger">Reject</a>
                         </td>
                     </tr>
                 }

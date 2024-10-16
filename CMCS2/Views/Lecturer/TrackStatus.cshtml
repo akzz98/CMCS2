@@ -17,25 +17,27 @@
         else
         {
 
-        <table class="table table-bordered table-striped">
-            <thead>
-                <tr>
-                    <th>Claim ID</th>
-                    <th>Date Submitted</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var claim in Model)
-                {
+            <table class="table table-bordered table-striped">
+                <thead>
                     <tr>
-                        <td>@claim.ClaimId</td>
-                        <td>@claim.DateSubmitted.ToShortDateString()</td>
-                        <td>@claim.Status</td>
+                        <th>Claim ID</th>
+                        <th>Date Submitted</th>
+                        <th>Status</th>
+                        <th>Rejection Reason</th>
                     </tr>
-                }
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach (var claim in Model)
+                    {
+                        <tr>
+                            <td>@claim.ClaimId</td>
+                            <td>@claim.DateSubmitted.ToShortDateString()</td>
+                            <td>@claim.Status</td>
+                            <td>@claim.RejectionReason</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
         }
     </div>
 

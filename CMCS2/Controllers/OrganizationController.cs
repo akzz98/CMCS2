@@ -59,13 +59,14 @@ namespace CMCS2.Controllers
         }
 
         // Manager rejects a verified claim (moves status to 'Rejected')
-        public async Task<IActionResult> RejectVerifiedClaim(int claimId)
+        public async Task<IActionResult> RejectVerifiedClaim(int claimId, string rejectionReason)
         {
             var claim = _context.Claims.FirstOrDefault(c => c.ClaimId == claimId);
 
             if (claim != null && claim.Status == "Verified")
             {
                 claim.Status = "Rejected";
+                claim.RejectionReason = rejectionReason;
                 await _context.SaveChangesAsync();
             }
 

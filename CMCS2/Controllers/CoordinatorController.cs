@@ -65,19 +65,18 @@ namespace CMCS2.Controllers
         }
 
         // Coordinator rejects a claim (moves status to 'Rejected')
-        public async Task<IActionResult> RejectClaim(int claimId)
+        public async Task<IActionResult> RejectClaim(int claimId, string rejectionReason)
         {
             var claim = _context.Claims.FirstOrDefault(c => c.ClaimId == claimId);
 
             if (claim != null && claim.Status == "Pending")
             {
                 claim.Status = "Rejected";
+                claim.RejectionReason = rejectionReason;
                 await _context.SaveChangesAsync();
             }
 
             return RedirectToAction("ViewUnapprovedClaims", "Coordinator");
         }
-
-
     }
 }

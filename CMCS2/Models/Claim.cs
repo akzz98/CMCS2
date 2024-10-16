@@ -10,7 +10,8 @@
         public string Status { get; set; } = "Pending";
         public DateTime DateSubmitted { get; set; } = DateTime.Now;
         public string LecturerId { get; set; }
-
-
+        public string? RejectionReason { get; set; }
+        public string LecturerName { get; set; }
+        public string LecturerSurname { get; set; }
     }
 }
