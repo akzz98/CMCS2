@@ -8,68 +8,86 @@
     <h1>Verified Claims</h1>
 
     <div class="table-container">
-        <table class="table table-bordered table-striped">
-            <thead>
-                <tr>
-                    <th>Claim ID</th>
-                    <th>Lecturer</th>
-                    <th>Hours Worked</th>
-                    <th>Hourly Rate</th>
-                    <th>Notes</th>
-                    <th>Supporting Document</th>
-                    <th>Verified By</th>
-                    <th>Date Verified</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var claim in Model)
-                {
+        @if (!Model.Any())
+        {
+            <div class="alert alert-warning" role="alert">
+                Nothing here yet
+            </div>
+        }
+        else
+        {
+            <table class="table table-bordered table-striped">
+                <thead>
                     <tr>
-                        <td>@claim.ClaimId</td>
-                        <td>@claim.LecturerFullName</td>
-                        <td>@claim.HoursWorked</td>
-                        <td>@claim.HourlyRate</td>
-                        <td>@claim.Notes</td>
-                        <td>
-                            @if (!string.IsNullOrEmpty(claim.DocumentPath))
-                            {
-                                <a href="@Url.Content(claim.DocumentPath)" target="_blank">View Document</a>
-                            }
-                            else
-                            {
-                                <span>No document uploaded</span>
-                            }
-                        </td>
-                        <td>
-                            @if (claim.Status == "Verified")
-                            {
-                                <span>@claim.CoordinatorFullName</span>
-                            }
-                            else
-                            {
-                                <span>Not Verified</span>
-                            }
-                        </td>
-                        <td>@claim.DateVerified</td>
-                        <td>
-                            <a href="@Url.Action("FinalizeApproval", "Organization", new { claimId = claim.ClaimId })" class="btn btn-success">Approve</a>
-                            <a href="@Url.Action("RejectVerifiedClaim", "Organization", new { claimId = claim.ClaimId })" class="btn btn-danger">Reject</a>
-                        </td>
+                        <th>Claim ID</th>
+                        <th>Lecturer</th>
+                        <th>Hours Worked</th>
+                        <th>Hourly Rate</th>
+                        <th>Notes</th>
+                        <th>Supporting Document</th>
+                        <th>Verified By</th>
+                        <th>Date Verified</th>
+                        <th>Actions</th>
                     </tr>
-                }
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach (var claim in Model)
+                    {
+                        <tr>
+                            <td>@claim.ClaimId</td>
+                            <td>@claim.LecturerFullName</td>
+                            <td>@claim.HoursWorked</td>
+                            <td>@claim.HourlyRate</td>
+                            <td>@claim.Notes</td>
+                            <td>
+                                @if (!string.IsNullOrEmpty(claim.DocumentPath))
+                                {
+                                    <a href="@Url.Content(claim.DocumentPath)" target="_blank">View Document</a>
+                                }
+                                else
+                                {
+                                    <span>No document uploaded</span>
+                                }
+                            </td>
+                            <td>
+                                @if (claim.Status == "Verified")
+                                {
+                                    <span>@claim.CoordinatorFullName</span>
+                                }
+                                else
+                                {
+                                    <span>Not Verified</span>
+                                }
+                            </td>
+                            <td>@claim.DateVerified</td>
+                            <td>
+                                <a href="@Url.Action("FinalizeApproval", "Organization", new { claimId = claim.ClaimId })" class="btn btn-success">Approve</a>
+                                <a href="@Url.Action("RejectVerifiedClaim", "Organization", new { claimId = claim.ClaimId })" class="btn btn-danger">Reject</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
     </div>
 
     <a href="@Url.Action("Index", "Organization")" class="btn btn-primary mt-4">Back</a>
 </div>
 
 <style>
+    style >
     .table-container {
         margin-top: 20px;
         max-width: 800px;
         width: 100%;
+        max-height: 500px;
+        overflow-y: auto;
+    }
+
+    .table thead th {
+        position: sticky;
+        top: 0;
+        z-index: 2;
     }
 
     .table {

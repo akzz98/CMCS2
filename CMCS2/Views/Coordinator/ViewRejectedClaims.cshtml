@@ -8,6 +8,14 @@
     <h1>Rejected Claims</h1>
 
     <div class="table-container">
+        @if (!Model.Any())
+        {
+            <div class="alert alert-warning" role="alert">
+                Nothing here yet
+            </div>
+        }
+        else
+        {
         <table class="table table-bordered table-striped">
             <thead>
                 <tr>
@@ -44,16 +52,26 @@
                 }
             </tbody>
         </table>
+        }
     </div>
 
     <a href="@Url.Action("Index", "Coordinator")" class="btn btn-primary mt-4">Back</a>
 </div>
 
 <style>
+    style >
     .table-container {
         margin-top: 20px;
         max-width: 800px;
         width: 100%;
+        max-height: 500px;
+        overflow-y: auto;
+    }
+
+    .table thead th {
+        position: sticky;
+        top: 0;
+        z-index: 2;
     }
 
     .table {
