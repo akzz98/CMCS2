@@ -17,6 +17,8 @@
                     <th>Hourly Rate</th>
                     <th>Notes</th>
                     <th>Supporting Document</th>
+                    <th>Verified By</th>
+                    <th>Date Verified</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -38,6 +40,18 @@
                             {
                                 <span>No document uploaded</span>
                             }
+                        </td>
+                        <td>
+                            @if (claim.Status == "Verified")
+                            {
+                                <span>@claim.CoordinatorFullName</span>
+                            }
+                            else
+                            {
+                                <span>Not Verified</span>
+                            }
+                        </td>
+                        <td>@claim.DateVerified</td>
                         <td>
                             <a href="@Url.Action("FinalizeApproval", "Organization", new { claimId = claim.ClaimId })" class="btn btn-success">Approve</a>
                             <a href="@Url.Action("RejectVerifiedClaim", "Organization", new { claimId = claim.ClaimId })" class="btn btn-danger">Reject</a>

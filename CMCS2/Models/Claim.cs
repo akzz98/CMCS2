@@ -12,5 +12,7 @@
         public string LecturerId { get; set; }
         public string? RejectionReason { get; set; }
         public string LecturerFullName { get; set; }
+        public string? CoordinatorFullName { get; set; }
+        public DateTime DateVerified { get; set; }
     }
 }
