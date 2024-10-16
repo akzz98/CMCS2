@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CMCS2.Controllers
 {
-    [Authorize(Roles = "Lecturer")]
+    [Authorize(Roles = "Lecturer, SuperUser")]
     public class LecturerController : Controller
     {
         private readonly IWebHostEnvironment _environment;

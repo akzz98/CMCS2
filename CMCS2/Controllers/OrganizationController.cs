@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CMCS2.Controllers
 {
-    [Authorize(Roles = "Manager")]
+    [Authorize(Roles = "Manager, SuperUser")]
     public class OrganizationController : Controller
     {
         private readonly ApplicationDbContext _context;

@@ -4,19 +4,16 @@ using CMCS2.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace CMCS2.Data.Migrations
+namespace CMCS2.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241016133848_AddVerifiedByToClaims")]
-    partial class AddVerifiedByToClaims
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -96,6 +93,26 @@ namespace CMCS2.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "e5fd6c0c-9c90-4f85-8cbb-1055765ffdcb",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "c524fb38-c65c-43d1-b5e0-efc906e3d4e8",
+                            Email = "admin@yourapp.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            Name = "Admin",
+                            NormalizedEmail = "ADMIN@YOURAPP.COM",
+                            NormalizedUserName = "ADMIN@YOURAPP.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAECyZN9bYHt1nKn2/NLZlZYkKWiDNLMcCcWOtUcZUVYeiCbjq5+gtb+NovJNnMDwclg==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "f4117e87-6501-4248-94ed-a11635a76842",
+                            Surname = "User",
+                            TwoFactorEnabled = false,
+                            UserName = "admin@yourapp.com"
+                        });
                 });
 
             modelBuilder.Entity("CMCS2.Models.Claim", b =>
@@ -107,7 +124,6 @@ namespace CMCS2.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ClaimId"));
 
                     b.Property<string>("CoordinatorFullName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("DateSubmitted")
@@ -175,6 +191,32 @@ namespace CMCS2.Data.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "3c3c823c-01cc-41d5-b84c-fee525a6605a",
+                            Name = "Lecturer",
+                            NormalizedName = "LECTURER"
+                        },
+                        new
+                        {
+                            Id = "ad1bb794-7571-4f22-a910-efcbfc9e0c51",
+                            Name = "Coordinator",
+                            NormalizedName = "COORDINATOR"
+                        },
+                        new
+                        {
+                            Id = "94cac02c-cfd7-471d-98c2-b6cb4a68f8aa",
+                            Name = "Manager",
+                            NormalizedName = "MANAGER"
+                        },
+                        new
+                        {
+                            Id = "3c35a983-9a42-4ccc-b0c2-1fac24e5a40e",
+                            Name = "SuperUser",
+                            NormalizedName = "SUPERUSER"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -264,6 +306,13 @@ namespace CMCS2.Data.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "e5fd6c0c-9c90-4f85-8cbb-1055765ffdcb",
+                            RoleId = "3c35a983-9a42-4ccc-b0c2-1fac24e5a40e"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
