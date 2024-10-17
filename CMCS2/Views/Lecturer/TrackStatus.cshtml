@@ -22,6 +22,7 @@
                     <tr>
                         <th>Claim ID</th>
                         <th>Date Submitted</th>
+                        <th>Supporting Document</th>
                         <th>Status</th>
                         <th>Rejection Reason</th>
                     </tr>
@@ -32,6 +33,16 @@
                         <tr>
                             <td>@claim.ClaimId</td>
                             <td>@claim.DateSubmitted.ToShortDateString()</td>
+                            <td>                 
+                                @if (!string.IsNullOrEmpty(claim.DocumentPath))
+                                {
+                                    <a href="@Url.Content(claim.DocumentPath)" target="_blank">View Document</a>
+                                }
+                                else
+                                {
+                                    <span>No document uploaded</span>
+                                }
+                            </td>
                             <td>@claim.Status</td>
                             <td>@claim.RejectionReason</td>
                         </tr>

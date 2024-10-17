@@ -1,5 +1,6 @@
 ﻿using CMCS2.Data;
 using CMCS2.Models;
+using Elfie.Serialization;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -63,10 +64,10 @@ namespace CMCS2.Controllers
                 // Handle file upload
                 if (file != null && file.Length > 0)
                 {
-                    // Restrict file size(e.g., 5MB limit)
-                    if (file.Length > 5 * 1024 * 1024)
+                    // Restrict file size to 10MB
+                    if (file.Length > 10 * 1024 * 1024)
                     {
-                        ModelState.AddModelError("", "File size cannot exceed 5MB.");
+                        ModelState.AddModelError("", "File size cannot exceed 10MB.");
                         return View();
                     }
 
@@ -79,7 +80,7 @@ namespace CMCS2.Controllers
                         return View();
                     }
 
-                    //Save the file
+                    // Save the file in wwwroot/uploads
                     var uploadsFolder = Path.Combine(_environment.WebRootPath, "uploads");
                     var uniqueFileName = Guid.NewGuid().ToString() + "_" + file.FileName;
                     var filePath = Path.Combine(uploadsFolder, uniqueFileName);
@@ -89,24 +90,23 @@ namespace CMCS2.Controllers
                         await file.CopyToAsync(stream);
                     }
 
-                    claim.DocumentPath = uniqueFileName;
+                    claim.DocumentPath = "/uploads/" + uniqueFileName;
                 }
 
                 // Save the claim to the database
                 _context.Claims.Add(claim);
                 await _context.SaveChangesAsync();
 
-
                 return RedirectToAction("ClaimSubmitted");
             }
 
             return View();
         }
+
         public IActionResult ClaimSubmitted()
         {
             return View();
         }
-
 
         public ActionResult TrackStatus()
         {
@@ -118,6 +118,5 @@ namespace CMCS2.Controllers
 
             return View(claims);
         }
-
     }
 }
