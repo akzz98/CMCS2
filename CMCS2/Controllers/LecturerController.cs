@@ -46,6 +46,18 @@ namespace CMCS2.Controllers
         [HttpPost]
         public async Task<IActionResult> SubmitClaim(double hoursWorked, double hourlyRate, string notes, IFormFile file)
         {
+            // Check for hours worked and hourly rate
+            if (hoursWorked <= 0)
+            {
+                ModelState.AddModelError(nameof(hoursWorked), "Hours worked must be greater than 0.");
+            }
+
+            if (hourlyRate <= 0)
+            {
+                ModelState.AddModelError(nameof(hourlyRate), "Hourly rate must be greater than 0.");
+            }
+
+            // Check if the model state is valid after the validation checks
             if (ModelState.IsValid)
             {
                 var user = await _userManager.GetUserAsync(User);
@@ -90,6 +102,7 @@ namespace CMCS2.Controllers
                         await file.CopyToAsync(stream);
                     }
 
+                    // Store only the relative path to the file
                     claim.DocumentPath = "/uploads/" + uniqueFileName;
                 }
 
@@ -102,6 +115,7 @@ namespace CMCS2.Controllers
 
             return View();
         }
+
 
         public IActionResult ClaimSubmitted()
         {
