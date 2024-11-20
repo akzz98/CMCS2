@@ -37,13 +37,13 @@ namespace CMCS2.Data
             var adminUser = new ApplicationUser
             {
                 Id = adminId,
-                UserName = "admin@yourapp.com",
-                Email = "admin@yourapp.com",
+                UserName = "admin@cmcs.com",
+                Email = "admin@cmcs.com",
                 Name = "Admin",
                 Surname = "User",
                 EmailConfirmed = true,
-                NormalizedEmail = "ADMIN@YOURAPP.COM",
-                NormalizedUserName = "ADMIN@YOURAPP.COM"
+                NormalizedEmail = "ADMIN@CMCS.COM",
+                NormalizedUserName = "ADMIN@CMCS.COM"
             };
 
             // Set password for the admin user
